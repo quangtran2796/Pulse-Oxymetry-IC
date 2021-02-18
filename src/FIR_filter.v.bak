@@ -1,0 +1,162 @@
+
+module FIR_filter(clk_sampling, clk, rst, filter_in, filter_out);
+
+    input clk_sampling, clk, rst;
+    input wire signed [7:0] filter_in;
+    output reg signed [19:0] filter_out;
+  
+    parameter word_width = 8;
+    parameter order = 21;
+    parameter out_width = 20;
+    parameter order_half = 10;
+
+    reg [word_width-1:0] L_coef;                     //register to save the current used coefficient 
+    reg [word_width-1:0] L_tap;                      //register to save the current used tap
+    reg [out_width- 1:0] L_product;                  //register to save the current product
+    reg [5:0] tap_counter;                           //counter to indentify the current used index for tap and coefficient
+    reg clk_sampling_previous, clk_sampling_current;
+
+    reg signed [word_width-1:0] delay_tap[order:0];
+
+    //define coef
+    wire signed [word_width-1:0] coef[order:0];
+    assign coef[0] = 2;
+    assign coef[1] = 10;   
+    assign coef[2] = 16;
+    assign coef[3] = 28; 
+    assign coef[4] = 43;
+    assign coef[5] = 60; 
+    assign coef[6] = 78;  
+    assign coef[7] = 95;
+    assign coef[8] = 111; 
+    assign coef[9] = 122;
+    assign coef[10] = 128;  
+    assign coef[11] = 128;
+    assign coef[12] = 122;   
+    assign coef[13] = 111;
+    assign coef[14] = 95; 
+    assign coef[15] = 78;
+    assign coef[16] = 60; 
+    assign coef[17] = 43;  
+    assign coef[18] = 28;
+    assign coef[19] = 16; 
+    assign coef[20] = 10;
+    assign coef[21] = 2;  
+
+    //define multiplier 
+    reg signed [out_width-1:0] product[order_half:0];
+
+    //define sum_buf
+    reg signed [out_width-1:0] sum_buf;
+
+    //defined input data buffer
+    reg signed [word_width-1:0] data_in_buf;
+
+    //get new data and save in data_in_buf
+    always @(posedge clk_sampling or negedge rst) begin
+	if (!rst) begin
+	 	data_in_buf <= 0;
+	end
+	else begin
+	 	data_in_buf <= filter_in;
+	end
+    end
+    
+    //update delay_tap
+    always @(posedge clk_sampling or negedge rst) begin 
+     	if(!rst) begin 
+      		delay_tap[0] <= 0;
+      		delay_tap[1] <= 0;
+      		delay_tap[2] <= 0;
+      		delay_tap[3] <= 0;
+      		delay_tap[4] <= 0;
+      		delay_tap[5] <= 0;
+      		delay_tap[6] <= 0;
+      		delay_tap[7] <= 0;
+      		delay_tap[8] <= 0;
+      		delay_tap[9] <= 0;
+      		delay_tap[10] <= 0;
+      		delay_tap[11] <= 0;
+      		delay_tap[12] <= 0;
+      		delay_tap[13] <= 0;
+      		delay_tap[14] <= 0;
+      		delay_tap[15] <= 0;
+      		delay_tap[16] <= 0;
+      		delay_tap[17] <= 0;
+     	 	delay_tap[18] <= 0;
+      		delay_tap[19] <= 0;
+      		delay_tap[20] <= 0;
+      		delay_tap[21] <= 0;
+     	end 
+     	else begin 
+      		delay_tap[0] <= data_in_buf;
+      		delay_tap[1] <= delay_tap[0];
+      		delay_tap[2] <= delay_tap[1];
+     	 	delay_tap[3] <= delay_tap[2];
+      		delay_tap[4] <= delay_tap[3];
+      		delay_tap[5] <= delay_tap[4];
+      		delay_tap[6] <= delay_tap[5];
+      		delay_tap[7] <= delay_tap[6];
+     	 	delay_tap[8] <= delay_tap[7];
+      		delay_tap[9] <= delay_tap[8];
+      		delay_tap[10] <= delay_tap[9];
+      		delay_tap[11] <= delay_tap[10];
+      		delay_tap[12] <= delay_tap[11];
+      		delay_tap[13] <= delay_tap[12];
+      		delay_tap[14] <= delay_tap[13];
+      		delay_tap[15] <= delay_tap[14];
+      		delay_tap[16] <= delay_tap[15];
+     	 	delay_tap[17] <= delay_tap[16];
+      		delay_tap[18] <= delay_tap[17];
+      		delay_tap[19] <= delay_tap[18];
+      		delay_tap[20] <= delay_tap[19];
+      		delay_tap[21] <= delay_tap[20];
+     	end 
+    end  
+
+    /* 
+     *  This always block will run every time new data arrive with much faster clock frequency. 
+     *  By using registers to save the current used coefficient, tap and calculating product 
+     *  multiplier and adder are reused to reduce used hardward and make the critical path shorter. 
+     *  When the posedge of clock sigle is detected, next coefficient and delay tap are loaded to
+     *  resgister L_coef and L_tap. The calculated result is then saved in register L_product. 
+     */
+always @(posedge clk or negedge rst) begin
+     	if (!rst) begin
+      		tap_counter <= 0;
+      		clk_sampling_previous <= 0;
+      		clk_sampling_current <= 0;
+      		filter_out <= 0;
+      		sum_buf <= 0;
+      		L_product <= 0;
+      		L_tap <= 0;
+      		L_coef <= 0; 	 
+     	end
+     	else begin
+       		clk_sampling_previous <= clk_sampling_current;
+       		clk_sampling_current <= clk_sampling;
+       		if(clk_sampling_previous == 0 && clk_sampling_current == 1) begin
+				tap_counter <= 0;
+        		sum_buf <= 0;
+       		 	L_product <= 0;
+       		 	L_tap <= 0;
+       		 	L_coef <= 0; 
+    	   	end
+   	    	if(tap_counter == order + 1)
+   		     	filter_out <= sum_buf;
+     	  	else begin
+    	   		if(tap_counter > 21) begin
+     			   	sum_buf <= sum_buf + L_product;
+     			   	tap_counter <= tap_counter + 1;
+    	  	 	end
+       			else begin 
+        			L_tap <= delay_tap[tap_counter];
+       		 		L_coef <= coef[tap_counter];
+       				L_product <= L_coef * L_tap;
+        			sum_buf <= sum_buf + L_product;
+        			tap_counter <= tap_counter + 1;
+       			end
+		end
+	    end
+	end
+endmodule

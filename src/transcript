@@ -1,0 +1,137 @@
+# //  Questa Sim-64
+# //  Version 10.7c linux_x86_64 Aug 17 2018
+# //
+# //  Copyright 1991-2018 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading project Controller
+# Compile of Controller.v was successful.
+# Compile of Fingelclip_Model.v was successful.
+# Compile of Fingerclip_Model_TB.v was successful.
+# Compile of FIR_filter.v was successful.
+# Compile of Demux_1to2.v was successful.
+# Compile of Controller_TB.v was successful.
+# Compile of Position_check.v was successful.
+# Compile of FIR_filter_TB.v was successful.
+# Compile of Demux_TB.v was successful.
+# 9 compiles, 0 failed with no errors.
+# Compile of Controller.v was successful.
+# Compile of Fingelclip_Model.v was successful.
+# Compile of Fingerclip_Model_TB.v was successful.
+# Compile of FIR_filter.v was successful.
+# Compile of Demux_1to2.v was successful.
+# Compile of Controller_TB.v was successful.
+# Compile of Position_check.v was successful.
+# Compile of FIR_filter_TB.v was successful.
+# Compile of Demux_TB.v was successful.
+# 9 compiles, 0 failed with no errors.
+vsim -vopt work.controller_TB -voptargs=+acc
+# vsim -vopt work.controller_TB -voptargs="+acc" 
+# Start time: 23:23:56 on Aug 07,2020
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(90): (vopt-8884) Illegal output port connection for 'out0' (1st connection) to reg type. 
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(90): (vopt-8884) Illegal output port connection for 'out1' (2nd connection) to reg type. 
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(95): (vopt-2912) Port 'out_filtered' not found in module 'FIR_filter' (1st connection).
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(95): (vopt-2912) Port 'clk_filter' not found in module 'FIR_filter' (2nd connection).
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(95): (vopt-2912) Port 'ADC_value' not found in module 'FIR_filter' (3rd connection).
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(95): (vopt-2912) Port 'rst_n' not found in module 'FIR_filter' (4th connection).
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(100): (vopt-2912) Port 'out_filtered' not found in module 'FIR_filter' (1st connection).
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(100): (vopt-2912) Port 'clk_filter' not found in module 'FIR_filter' (2nd connection).
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(100): (vopt-2912) Port 'ADC_value' not found in module 'FIR_filter' (3rd connection).
+# ** Error (suppressible): /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Controller.v(100): (vopt-2912) Port 'rst_n' not found in module 'FIR_filter' (4th connection).
+# Optimization failed
+# Error loading design
+# End time: 23:23:57 on Aug 07,2020, Elapsed time: 0:00:01
+# Errors: 10, Warnings: 0
+vsim -vopt -voptargs=+acc work.Controller_TB
+# vsim -vopt -voptargs="+acc" work.Controller_TB 
+# Start time: 23:24:07 on Aug 07,2020
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.Controller_TB(fast)
+# Loading work.Controller(fast)
+# Loading work.Demux_1to2(fast)
+# Loading work.Position_check(fast)
+# Loading work.FIR_filter(fast)
+# Loading work.Fingerclip_Model(fast)
+add wave sim:/Controller_TB/DUT/*
+# Load canceled
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+# Causality operation skipped due to absence of debug database file
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+# End time: 23:26:16 on Aug 07,2020, Elapsed time: 0:02:09
+# Errors: 1, Warnings: 1

@@ -1,0 +1,51 @@
+`timescale 1ms/1us 
+module FIR_filter_TB();
+	reg clk;
+	reg clk_sampling;
+	reg rst;
+	reg signed [7:0] filter_in;
+
+	wire signed [19:0] filter_out;
+
+	FIR_filter DUT(.clk(clk),
+	       	       .rst(rst),
+	               .filter_in(filter_in),
+	               .filter_out(filter_out),
+	               .clk_sampling(clk_sampling));
+
+	initial begin 
+ 		clk = 0;
+ 		clk_sampling = 0;
+ 		rst = 0;
+ 		#24;
+ 		rst = 1;
+ 		#10000 $stop;
+	end
+
+	always #1 clk = !clk;			 // This is fast clock used for calculating 
+	always #25 clk_sampling = !clk_sampling; // This is slow clock use for sampling 
+
+
+
+	initial begin //#120.2 
+		#23 filter_in =5;
+ 		repeat(2) begin 
+  			#43 filter_in = 0; 
+  			#43 filter_in = 25;
+  			#43 filter_in = 50;
+  			#43 filter_in = 25; 
+  			#43 filter_in = 20;
+  			#43 filter_in = 10; 
+  			#43 filter_in = 0;
+ 		end 
+	end
+
+	integer file;
+	initial begin
+ 		file = $fopen("dataout.txt", "w");
+	end 
+
+	always @(posedge clk_sampling) begin
+ 		$fdisplay(file, filter_out);
+	end 
+endmodule

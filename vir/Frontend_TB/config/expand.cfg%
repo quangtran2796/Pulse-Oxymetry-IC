@@ -1,0 +1,17 @@
+//Revision 92
+//NOTE
+// Default config view template for AMS netlister(s) in ADE.
+// Note:
+//      Please remember to replace Top Cell Library, Cell, and View
+//      fields with the actual names used by your design.
+//END_NOTE
+
+config Frontend_TB;
+design HDL_Lab_vhdlp1.Frontend_TB:schematic;
+liblist myLib, HDL_Lab_vhdlp1;
+
+viewlist spectre, spice, pspice, verilog, verilogams, behavioral, functional, systemVerilog, schematic, veriloga, vhdl, vhdlams, wreal;
+stoplist spectre;
+
+
+endconfig

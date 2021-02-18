@@ -1,0 +1,43 @@
+// VerilogA for HDL_Lab_vhdlp1, ADC_8_bit, veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module ADC_8_bit(out, in, clk);
+ input in, clk;
+ output [7:0] out;
+
+ voltage in, clk;
+ voltage [7:0] out;
+ 
+ parameter real fullscale = 1.8;
+ parameter real delay_ = 0, trise = 10n, tfall = 10n;
+ parameter real clk_vth = 0.9;
+ parameter real out_high = 1.8, out_low = 0 from (-inf:out_high);
+
+ real sample,thresh;
+ real result[7:0];
+ integer i;
+
+ analog
+ begin
+  @(cross(V(clk)-clk_vth, +1))
+  begin
+   sample = V(in);
+   thresh = fullscale/2;
+   for(i=7;i>=0;i=i-1)
+   begin
+    if (sample > thresh)
+    begin
+     result[i] = out_high;
+     sample = sample - thresh;
+    end
+   else result[i] = out_low;
+   sample = 2*sample;
+   end
+  end
+  generate i (7, 0) begin
+  V(out[i]) <+ transition(result[i], delay_, trise, tfall);
+  end
+ end
+endmodule

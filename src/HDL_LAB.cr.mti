@@ -1,0 +1,15 @@
+/home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Initial_Values_Testbench.v {1 {vlog -work work -vopt -stats=none /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Initial_Values_Testbench.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 17 2018
+-- Compiling module Initial_Values_TB
+
+Top level modules:
+	Initial_Values_TB
+
+} {} {}} /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Initial_Values.v {1 {vlog -work work -vopt -stats=none /home/vhdlp1/Downloads/hdl_lab/HDL_Lab_UMC_65/implementation/umc_65_ll/src/Initial_Values.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 17 2018
+-- Compiling module Initial_Values
+
+Top level modules:
+	Initial_Values
+
+} {} {}}
